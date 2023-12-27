@@ -1,0 +1,35 @@
+{% extends 'base_nav.html' %}
+
+{% block content %}
+<div id="profile">
+    <div class="info">
+        <!-- 프로필 이미지 영역 -->
+        {% if user.profile_image %}
+            <img src="{{ user.profile_image.url }}">
+        {% endif %}
+
+        <!-- 사용자 정보 영역 -->
+        <div class="info-texts">
+            <h1>{{ user.username }}</h1>
+            <div class="counts">
+                <dl>
+                    <dt>Posts</dt>
+                    <dd>
+                        <a href="{% url 'users:profile' user_id=user.id %}">{{ user.post_set.count }}</a>
+                    </dd>
+                    <dt>Followers</dt>
+                    <dd>
+                        <a href="{% url 'users:followers' user_id=user.id %}">{{ user.followers.count }}</a>
+                    </dd>
+                    <dt>Following</dt>
+                    <dd>
+                        <a href="{% url 'users:following' user_id=user.id %}">{{ user.following.count }}</a>
+                    </dd>
+                </dl>
+            </div>
+            <p>{{ user.short_description }}</p>
+        </div>
+    </div>
+    {% block bottom_data %}{% endblock %}
+</div>
+{% endblock %}

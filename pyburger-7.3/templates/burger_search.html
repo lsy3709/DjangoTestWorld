@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ko">
+<body>
+    <h1>pyburger의 햄버거 검색화면입니다</h1>
+    <div>
+        <form method="GET">
+            <input type="text" name="keyword">
+            <button type="submit">검색</button>
+        </form>
+    </div>
+    <h2>검색결과</h2>
+    {% for burger in burgers %}
+        <div>
+            {{ burger.name }}
+            (가격: {{ burger.price }}원,
+            칼로리: {{ burger.calories }}kcal)
+        </div>
+    {% endfor %}
+</body>
+</html>

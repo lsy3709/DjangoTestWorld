@@ -1,0 +1,43 @@
+{% extends 'base_nav.html' %}
+
+{% block content %}
+<div id="profile">
+    <div class="info">
+        <!-- 프로필 이미지 영역 -->
+        {% if user.profile_image %}
+            <img src="{{ user.profile_image.url }}">
+        {% endif %}
+
+        <!-- 사용자 정보 영역 -->
+        <div class="info-texts">
+            <h1>{{ user.username }}</h1>
+            <div class="counts">
+                <dl>
+                    <dt>Posts</dt>
+                    <dd>{{ user.post_set.count }}</dd>
+                    <dt>Followers</dt>
+                    <dd>{{ user.followers.count }}</dd>
+                    <dt>Following</dt>
+                    <dd>{{ user.following.count }}</dd>
+                </dl>
+            </div>
+            <p>{{ user.short_description }}</p>
+        </div>
+    </div>
+
+    <!-- 사용자가 작성한 Post목록 -->
+    <div class="post-grid-container">
+        {% for post in user.post_set.all %}
+            {% if post.postimage_set.first %}
+                {% if post.postimage_set.first.photo %}
+                    <div class="post-grid">
+                        <a href="{% url 'posts:post_detail' post_id=post.id %}">
+                            <img src="{{ post.postimage_set.first.photo.url }}" alt="">
+                        </a>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

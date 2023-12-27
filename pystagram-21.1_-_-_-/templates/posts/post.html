@@ -1,0 +1,69 @@
+<article id="post-{{ post.id }}" class="post">
+    <header class="post-header">
+        {% if post.user.profile_image %}
+        <img src="{{ post.user.profile_image.url }}">
+        {% endif %}
+        <span>{{ post.user.username }}</span>
+    </header>
+
+    <!-- 이미지 슬라이드 영역 시작 -->
+    <div class="post-images splide">
+        <div class="splide__track">
+            <ul class="splide__list">
+                {% for image in post.postimage_set.all %}
+                {% if image.photo %}
+                <li class="splide__slide">
+                    <img src="{{ image.photo.url }}">
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <!-- 이미지 슬라이드 영역 종료 -->
+
+    <div class="post-content">
+        {{ post.content|linebreaksbr }}
+        <div class="post-tags">
+            {% for tag in post.tags.all %}
+            <a href="{% url 'posts:tags' tag_name=tag.name %}">#{{ tag.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="post-buttons">
+        <button>Likes(0)</button>
+        <span>Comments({{ post.comment_set.count }})</span>
+    </div>
+
+    <div class="post-comments">
+        <ul>
+            <!-- 각 Post에 연결된 PostComment들을 순회 -->
+            {% for comment in post.comment_set.all %}
+            <li>
+                <span>{{ comment.user.username }}</span>
+                <span>{{ comment.content }}</span>
+
+                <!-- 댓글 삭제 Form 추가 -->
+                {% if user == comment.user %}
+                <form method="POST" action="{% url 'posts:comment_delete' comment_id=comment.id %}">
+                    {% csrf_token %}
+                    <button type="submit">삭제</button>
+                </form>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <small>{{ post.created }}</small>
+    <div class="post-comment-create">
+        <form method="POST" action="{% url 'posts:comment_add' %}">
+            {% csrf_token %}
+            <!-- 사용자가 직접 입력하지 않는 고정된 데이터를 form내부에 위치 -->
+            <input type="hidden" name="post" value="{{ post.id }}">
+            {{ comment_form.content }}
+            <button type="submit">게시</button>
+        </form>
+    </div>
+</article>

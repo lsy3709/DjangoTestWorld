@@ -1,0 +1,11 @@
+{% extends 'base_slider.html' %}
+{% load custom_tags %}
+
+{% block content %}
+    <div id="feeds" class="post-container">
+        {% for post in posts %}
+            {% url 'posts:feeds' as action_redirect_to %}
+            {% include 'posts/post.html' with action_redirect_url=action_redirect_to|concat:'#post-'|concat:post.id %}
+        {% endfor %}
+    </div>
+{% endblock %}

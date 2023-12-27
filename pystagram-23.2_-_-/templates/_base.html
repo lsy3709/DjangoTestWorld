@@ -1,0 +1,12 @@
+{% load static %}
+<!doctype html>
+<html lang="ko">
+<head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Pystagram</title>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    {% block base_content %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'nav.html' %}
+<div id="feeds" class="post-container">
+    {% url 'posts:post_detail' post.id as action_redirect_to %}
+    {% include 'posts/post.html' with action_redirect_url=action_redirect_to %}
+</div>
+
+<!-- Splide 초기화 자바스크립트 코드 -->
+<script>
+    const elms = document.getElementsByClassName('splide');
+    for (let i = 0; i < elms.length; i++) {
+        new Splide(elms[i]).mount();
+    }
+</script>
+{% endblock %}

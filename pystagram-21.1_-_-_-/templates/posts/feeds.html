@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'nav.html' %}
+<div id="feeds" class="post-container">
+    <!-- 전달된 Post QuerySet객체를 순회 -->
+    {% for post in posts %}
+        {% include 'posts/post.html' %}
+    {% endfor %}
+</div>
+
+<!-- Splide 초기화 자바스크립트 코드 -->
+<script>
+    const elms = document.getElementsByClassName('splide');
+    for (let i = 0; i < elms.length; i++) {
+        new Splide(elms[i]).mount();
+    }
+</script>
+{% endblock %}

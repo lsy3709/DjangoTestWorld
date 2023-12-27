@@ -1,0 +1,18 @@
+{% extends 'base_profile.html' %}
+
+{% block bottom_data %}
+<!-- 사용자가 작성한 Post목록 -->
+<div class="post-grid-container">
+    {% for post in user.post_set.all %}
+        {% if post.postimage_set.first %}
+            {% if post.postimage_set.first.photo %}
+                <div class="post-grid">
+                    <a href="{% url 'posts:post_detail' post_id=post.id %}">
+                        <img src="{{ post.postimage_set.first.photo.url }}" alt="">
+                    </a>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

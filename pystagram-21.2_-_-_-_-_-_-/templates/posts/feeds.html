@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+
+{% block content %}
+{% include 'nav.html' %}
+<div id="feeds" class="post-container">
+    {% for post in posts %}
+        {% url 'posts:feeds' as action_redirect_to %}
+        {% include 'posts/post.html' with action_redirect_url=action_redirect_to|concat:'#post-'|concat:post.id %}
+    {% endfor %}
+</div>
+
+<!-- Splide 초기화 자바스크립트 코드 -->
+<script>
+    const elms = document.getElementsByClassName('splide');
+    for (let i = 0; i < elms.length; i++) {
+        new Splide(elms[i]).mount();
+    }
+</script>
+{% endblock %}
